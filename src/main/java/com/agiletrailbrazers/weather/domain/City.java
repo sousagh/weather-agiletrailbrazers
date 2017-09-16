@@ -1,9 +1,6 @@
 package com.agiletrailbrazers.weather.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -13,6 +10,7 @@ import java.io.Serializable;
 public class City implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Embedded
@@ -24,35 +22,28 @@ public class City implements Serializable {
     @Column
     private double temperature;
 
-    public long getId() {
-        return this.id;
+    public City(String name, double temperature, double latitude, double longitude) {
+        this.name = name;
+        this.temperature = temperature;
+        this.geolocation = new Geolocation(latitude, longitude);
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public City() {
+    }
+
+    public long getId() {
+        return this.id;
     }
 
     public Geolocation getGeolocation() {
         return this.geolocation;
     }
 
-    public void setGeolocation(Geolocation geolocation) {
-        this.geolocation = geolocation;
-    }
-
     public String getName() {
         return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public double getTemperature() {
         return this.temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
     }
 }

@@ -6,10 +6,12 @@ import com.agiletrailbrazers.weather.exception.CityNotFoundException;
 import com.agiletrailbrazers.weather.repository.CityRepository;
 import com.agiletrailbrazers.weather.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by gustavosousa on 9/16/17.
  */
+@Service
 public class CityServiceImpl implements CityService {
 
     private CityRepository cityRepository;
@@ -30,7 +32,7 @@ public class CityServiceImpl implements CityService {
     }
 
     private City getCity(double latitude, double longitude) throws CityNotFoundException {
-        City city1 = this.cityRepository.findByLatitudeAndLongitude(latitude, longitude);
+        City city1 = this.cityRepository.findByGeolocationLatitudeAndGeolocationLongitude(latitude, longitude);
         if (city1 == null) {
             throw new CityNotFoundException("City with coordinates (" + latitude + ", " + longitude + ") not found.");
         }

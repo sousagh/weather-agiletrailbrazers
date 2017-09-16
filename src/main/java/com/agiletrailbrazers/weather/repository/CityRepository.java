@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CityRepository extends CrudRepository<City, Long> {
-    City findByLatitudeAndLongitude(double l, double l1);
+    City findByGeolocationLatitudeAndGeolocationLongitude(double latitude, double longitude);
 }

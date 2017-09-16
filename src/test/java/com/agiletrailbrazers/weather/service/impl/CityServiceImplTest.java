@@ -26,13 +26,13 @@ public class CityServiceImplTest {
 
     @Test
     public void findTemperatureDifference_caseOfSuccess() throws CityNotFoundException {
-        City city1 = new City();
-        city1.setTemperature(100);
-        Mockito.when(this.repository.findByLatitudeAndLongitude(1, 2)).thenReturn(city1);
+        City city1 = new City("Test1", 100, 1, 2);
 
-        City city2 = new City();
-        city2.setTemperature(60);
-        Mockito.when(this.repository.findByLatitudeAndLongitude(2, 2)).thenReturn(city2);
+        Mockito.when(this.repository.findByGeolocationLatitudeAndGeolocationLongitude(1, 2)).thenReturn(city1);
+
+        City city2 = new City("Test2", 60, 2, 2);
+
+        Mockito.when(this.repository.findByGeolocationLatitudeAndGeolocationLongitude(2, 2)).thenReturn(city2);
 
         ReportTemperatureDifference differenceTemperature = this.service.findDifferenceTemperature(1, 2, 2, 2);
         Assert.assertEquals(differenceTemperature.getTemperatureDifference(), 40, 0.0001);
@@ -40,13 +40,11 @@ public class CityServiceImplTest {
 
     @Test
     public void findTemperatureDifference_equalTemperature_caseOfSuccess() throws CityNotFoundException {
-        City city1 = new City();
-        city1.setTemperature(100);
-        Mockito.when(this.repository.findByLatitudeAndLongitude(1, 2)).thenReturn(city1);
+        City city1 = new City("Test1", 100, 1, 2);
+        Mockito.when(this.repository.findByGeolocationLatitudeAndGeolocationLongitude(1, 2)).thenReturn(city1);
 
-        City city2 = new City();
-        city2.setTemperature(100);
-        Mockito.when(this.repository.findByLatitudeAndLongitude(2, 2)).thenReturn(city2);
+        City city2 = new City("Test2", 100, 2, 2);
+        Mockito.when(this.repository.findByGeolocationLatitudeAndGeolocationLongitude(2, 2)).thenReturn(city2);
 
         ReportTemperatureDifference differenceTemperature = this.service.findDifferenceTemperature(1, 2, 2, 2);
         Assert.assertEquals(differenceTemperature.getTemperatureDifference(), 0, 0.0001);
@@ -55,7 +53,7 @@ public class CityServiceImplTest {
 
     @Test(expected = CityNotFoundException.class)
     public void findTemperatureDifference_cityNotFound() throws CityNotFoundException {
-        Mockito.when(this.repository.findByLatitudeAndLongitude(1, 2)).thenThrow(CityNotFoundException.class);
+        Mockito.when(this.repository.findByGeolocationLatitudeAndGeolocationLongitude(1, 2)).thenThrow(CityNotFoundException.class);
         this.service.findDifferenceTemperature(1, 2, 2, 2);
     }
 }
