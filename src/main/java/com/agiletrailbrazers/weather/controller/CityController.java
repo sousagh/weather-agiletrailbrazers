@@ -3,6 +3,7 @@ package com.agiletrailbrazers.weather.controller;
 import com.agiletrailbrazers.weather.domain.report.ReportTemperatureDifference;
 import com.agiletrailbrazers.weather.exception.CityNotFoundException;
 import com.agiletrailbrazers.weather.service.CityService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +24,7 @@ public class CityController {
     }
 
     @RequestMapping(value = "tempDiff", method = RequestMethod.GET)
+    @ApiOperation(value = "Get temperature difference", notes = "Returns a report of the temperature difference based on two cities coordinates.")
     public ReportTemperatureDifference tempDiff(@RequestParam(value = "lat1") double latitude1,
                                                 @RequestParam(value = "long1") double longitude1,
                                                 @RequestParam(value = "lat2") double latitude2,
